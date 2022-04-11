@@ -60,6 +60,14 @@ body {
 .button:hover {
   background-color: #f7c054;
 }
+.total {
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+}
 .footer {
   display: flex;
   align-items: center;

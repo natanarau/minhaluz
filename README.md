@@ -8,6 +8,8 @@
 
 ## Lembre-se que as tarifas de bandeiras mudam. 😉
 
+<a href="https://minhaluz.vercel.app/">Clique aqui e teste vc mesmo 😍</a>
+
 ![image](https://user-images.githubusercontent.com/35064731/163227030-a17f8c68-5ca0-48be-b51f-adfbe1c84abd.png)
 
 ![image](https://user-images.githubusercontent.com/35064731/163227217-e7eea86d-5461-481d-8cf0-9807a40cfd2d.png)

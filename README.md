@@ -2,7 +2,7 @@
 
 ## EX: Se eu gastar 550kW quanto eu pagaria na minha conta de luz? 🤑
 
-### Coloca os 500kW e o restante dos dados da sua conta de energia. 😁
+### Coloca os 550kW e o restante dos dados da sua conta de energia. 😁
 
 ### Assim você terá ideia do seu consumo.
 

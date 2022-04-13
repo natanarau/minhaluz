@@ -1,5 +1,12 @@
 import React from 'react';
 import Styles from './assets/css/App.module.css';
+import Valores from './Componets/Valores';
+import {
+  maskValorc,
+  maskReal,
+  maskBandeira,
+  maskPorcento,
+} from '../src/Hooks/Mask';
 
 export default function App() {
   const [consumo, setConsumo] = React.useState('');
@@ -12,37 +19,44 @@ export default function App() {
   const [cofins, setCofins] = React.useState('');
   const [total, setTotal] = React.useState('');
 
+  const valorTusd = tusd.replace(',', '.') * consumo;
+  const valorTe = te.replace(',', '.') * consumo;
+  const valorConsumo = valorTusd + valorTe;
+  const valorBandeira = vbandeira.replace(',', '.') * consumo;
+  const valorceb = valorConsumo + valorBandeira;
+  const valorIcms = (valorceb / 100) * icms;
+  const valorSemIcms = valorceb - valorIcms;
+  const valorPis = (valorSemIcms / 100) * pis;
+  const valorCofins = (valorSemIcms / 100) * cofins;
+  const imposto = valorPis + valorCofins;
+  const valorcebei = valorceb + parseFloat(ipublica.replace(',', '.'));
+  const totalDaFatura = valorcebei + imposto;
+
   const handleclick = (e) => {
     e.preventDefault();
-    const valorTusd = tusd * consumo;
-    const valorTe = te * consumo;
-    const valorConsumo = valorTusd + valorTe;
-    const valorBandeira = vbandeira * consumo;
-    const valorceb = valorConsumo + valorBandeira;
-    const valorIcms = (valorceb / 100) * icms;
-    const valorSemIcms = valorceb - valorIcms;
-    const valorPis = (valorSemIcms / 100) * pis;
-    const valorCofins = (valorSemIcms / 100) * cofins;
-    const imposto = valorPis + valorCofins;
-    const valorcebei = valorceb + parseFloat(ipublica);
-    const totalDaFatura = valorcebei + imposto;
-    console.log('valor tusd: ' + valorTusd);
-    console.log('valor te: ' + valorTe);
-    console.log('valor Bandeira: ' + valorBandeira);
-    console.log('valor Consumo mais bandeira: ' + valorceb);
-    console.log('valor icms: ' + valorIcms);
-    console.log('valor cofins: ' + valorSemIcms);
-    console.log('valor pis: ' + valorPis);
-    console.log('valor cofins: ' + valorCofins);
-    console.log('Total da Fatura: ' + totalDaFatura);
-
     setTotal(totalDaFatura);
+  };
+
+  const handlezero = () => {
+    setConsumo('');
+    setTusd('');
+    setIpublica('');
+    setPis('');
+    setVbandeira('');
+    setTe('');
+    setIcms('');
+    setCofins('');
+    setTotal('');
   };
 
   return (
     <>
       <div className={Styles.container}>
-        <label className={Styles.title}>Minha conta de luz</label>
+        <label className={Styles.title}>Minha Energia</label>
+        <p>
+          Insira os dados da sua conta de energia abaixo e compare o quanto o
+          sistema de energia solar favorece.
+        </p>
 
         <form onSubmit={handleclick}>
           <div className={Styles.dados}>
@@ -69,7 +83,7 @@ export default function App() {
                   placeholder="R$ 0,00000000"
                   required
                   value={tusd}
-                  onChange={(e) => setTusd(e.target.value)}
+                  onChange={(e) => setTusd(maskValorc(e.target.value))}
                 />
               </div>
 
@@ -82,7 +96,7 @@ export default function App() {
                   placeholder="R$ 0,00"
                   required
                   value={ipublica}
-                  onChange={(e) => setIpublica(e.target.value)}
+                  onChange={(e) => setIpublica(maskReal(e.target.value))}
                 />
               </div>
 
@@ -95,7 +109,7 @@ export default function App() {
                   placeholder="0%"
                   required
                   value={pis}
-                  onChange={(e) => setPis(e.target.value)}
+                  onChange={(e) => setPis(maskPorcento(e.target.value))}
                 />
               </div>
             </div>
@@ -107,10 +121,10 @@ export default function App() {
                   id="vbandeira"
                   name="vbandeira"
                   type="text"
-                  placeholder="R$ 0,00"
+                  placeholder="R$ 0,0000"
                   required
                   value={vbandeira}
-                  onChange={(e) => setVbandeira(e.target.value)}
+                  onChange={(e) => setVbandeira(maskBandeira(e.target.value))}
                 />
               </div>
 
@@ -123,7 +137,7 @@ export default function App() {
                   placeholder="R$ 0,00000000"
                   required
                   value={te}
-                  onChange={(e) => setTe(e.target.value)}
+                  onChange={(e) => setTe(maskValorc(e.target.value))}
                 />
               </div>
 
@@ -136,7 +150,7 @@ export default function App() {
                   placeholder="0%"
                   required
                   value={icms}
-                  onChange={(e) => setIcms(e.target.value)}
+                  onChange={(e) => setIcms(maskPorcento(e.target.value))}
                 />
               </div>
 
@@ -149,16 +163,34 @@ export default function App() {
                   placeholder="0%"
                   required
                   value={cofins}
-                  onChange={(e) => setCofins(e.target.value)}
+                  onChange={(e) => setCofins(maskPorcento(e.target.value))}
                 />
               </div>
             </div>
           </div>
-          <button className={Styles.button}>Calcular</button>
+          <div className={Styles.buttonGrup}>
+            <button className={Styles.button}>Calcular</button>
+            {total && (
+              <input
+                type="reset"
+                onClick={handlezero}
+                className={Styles.button}
+                value="Zerar"
+              />
+            )}
+          </div>
         </form>
-        <div className={Styles.total}>
-          {total ? `Você irá pagar: R$ ${total}` : 'Preencha os dados acima.'}
-        </div>
+        {total && (
+          <Valores
+            valorTusd={valorTusd}
+            valorTe={valorTe}
+            valorBandeira={valorBandeira}
+            valorIcms={valorIcms}
+            valorPis={valorPis}
+            valorCofins={valorCofins}
+            total={total}
+          />
+        )}
         <div className={Styles.footer}>
           Desenvolvido por:
           <a href="https://www.linkedin.com/in/natanarau/" target="_blanck">

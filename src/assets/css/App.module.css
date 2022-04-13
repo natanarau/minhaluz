@@ -21,6 +21,16 @@ body {
   text-align: center;
   margin: 10px;
 }
+p {
+  text-align: center;
+  color: #353535;
+  font-family: 'Mulish', sans-serif;
+  margin: 0px 10% 10px 10%;
+  font-size: 18px;
+  background-color: #a3e3ff;
+  color: #353535;
+  padding: 10px;
+}
 .dados {
   display: flex;
   justify-content: center;
@@ -45,7 +55,7 @@ body {
 }
 .button {
   display: block;
-  margin: 10px auto;
+  margin: 10px;
   background-color: #FFAE00;
   color: #ffffff;
   font-family: 'Mulish', sans-serif;
@@ -57,16 +67,39 @@ body {
   border: none;
   transition: 0.5s;
 }
+.buttonGrup {
+  display: flex;
+  justify-content: center;
+}
 .button:hover {
   background-color: #f7c054;
 }
-.total {
-  display: flex;
+.gridValor {
+  display: grid;
   justify-content: center;
+  justify-items: center;
   color: #ffffff;
   font-family: 'Mulish', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+}
+.gridValor strong {
   font-weight: 700;
-  font-size: 50px;
+}
+.gridValor span {
+  font-size: 40px;
+  margin-top: 20px;
+}
+.flexValor {
+  display: flex;
+  margin-top: 20px;
+}
+.quad {
+  margin: 0 25px
+}
+.totalPagar {
+  margin: 20px;
+  text-align: center;
 }
 .footer {
   display: flex;
@@ -91,5 +124,12 @@ body {
   }
   .title {
     font-size: 45px;
+  }
+  .flexValor {
+    display: grid;
+    font-size: 25px;
+  }
+  .buttonGrup {
+    display: grid;
   }
 }
